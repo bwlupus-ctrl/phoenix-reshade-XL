@@ -252,6 +252,7 @@ set(viewer_SOURCE_FILES
     llbuycurrencyhtml.cpp
     llcallingcard.cpp
     llcameraoperator.cpp
+    llcinematiccamera.cpp
     llchannelmanager.cpp
     llchatbar.cpp
     llchathistory.cpp
@@ -1116,6 +1117,7 @@ set(viewer_HEADER_FILES
     llbuycurrencyhtml.h
     llcallingcard.h
     llcameraoperator.h
+    llcinematiccamera.h
     llcapabilityprovider.h
     llchannelmanager.h
     llchatbar.h

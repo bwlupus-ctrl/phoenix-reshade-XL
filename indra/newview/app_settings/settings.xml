@@ -3344,6 +3344,369 @@
       <key>Value</key>
       <string />
     </map>
+    <key>CinematicCamEnabled</key>
+    <map>
+      <key>Comment</key>
+      <string>Enable the automated cinematic camera (takes over the render camera)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>Boolean</string>
+      <key>Value</key>
+      <integer>0</integer>
+    </map>
+    <key>CinematicCamMode</key>
+    <map>
+      <key>Comment</key>
+      <string>Cinematic camera mode: 1=Bone Lock (GoPro) 2=Orbit 3=Fly Hover 4=Sweep 5=Crane</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>S32</string>
+      <key>Value</key>
+      <integer>2</integer>
+    </map>
+    <key>CinematicCamUseSelected</key>
+    <map>
+      <key>Comment</key>
+      <string>Target the selected avatar instead of yourself when one is selected</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>Boolean</string>
+      <key>Value</key>
+      <integer>0</integer>
+    </map>
+    <key>CinematicCamSmoothing</key>
+    <map>
+      <key>Comment</key>
+      <string>Temporal smoothing time constant in seconds (0 = rigid lock)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.35</real>
+    </map>
+    <key>CinematicCamLookAtHead</key>
+    <map>
+      <key>Comment</key>
+      <string>Patterns frame the target's head joint instead of chest height</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>Boolean</string>
+      <key>Value</key>
+      <integer>1</integer>
+    </map>
+    <key>CinematicCamUseOperator</key>
+    <map>
+      <key>Comment</key>
+      <string>Route the cinematic camera through the handheld camera operator</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>Boolean</string>
+      <key>Value</key>
+      <integer>0</integer>
+    </map>
+    <key>CinematicCamJoint</key>
+    <map>
+      <key>Comment</key>
+      <string>Skeleton joint name for Bone Lock mode (e.g. mHead, mChest, mWristRight)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>String</string>
+      <key>Value</key>
+      <string>mHead</string>
+    </map>
+    <key>CinematicCamBoneOffsetForward</key>
+    <map>
+      <key>Comment</key>
+      <string>Bone Lock camera mount offset forward of the joint in meters</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.1</real>
+    </map>
+    <key>CinematicCamBoneOffsetLeft</key>
+    <map>
+      <key>Comment</key>
+      <string>Bone Lock camera mount offset left of the joint in meters</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.0</real>
+    </map>
+    <key>CinematicCamBoneOffsetUp</key>
+    <map>
+      <key>Comment</key>
+      <string>Bone Lock camera mount offset above the joint in meters</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.05</real>
+    </map>
+    <key>CinematicCamBoneAimYaw</key>
+    <map>
+      <key>Comment</key>
+      <string>Bone Lock aim trim yaw in degrees</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.0</real>
+    </map>
+    <key>CinematicCamBoneAimPitch</key>
+    <map>
+      <key>Comment</key>
+      <string>Bone Lock aim trim pitch in degrees</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.0</real>
+    </map>
+    <key>CinematicCamBoneAimRoll</key>
+    <map>
+      <key>Comment</key>
+      <string>Bone Lock aim trim roll in degrees</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.0</real>
+    </map>
+    <key>CinematicCamBoneHorizonLock</key>
+    <map>
+      <key>Comment</key>
+      <string>Bone Lock keeps the horizon level (gimbal-style) instead of rolling with the bone</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>Boolean</string>
+      <key>Value</key>
+      <integer>0</integer>
+    </map>
+    <key>CinematicCamOrbitRadius</key>
+    <map>
+      <key>Comment</key>
+      <string>Orbit radius in meters</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>3.0</real>
+    </map>
+    <key>CinematicCamOrbitSpeed</key>
+    <map>
+      <key>Comment</key>
+      <string>Orbit angular speed in degrees per second (negative reverses direction)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>20.0</real>
+    </map>
+    <key>CinematicCamOrbitHeight</key>
+    <map>
+      <key>Comment</key>
+      <string>Orbit height above the target position in meters</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.5</real>
+    </map>
+    <key>CinematicCamOrbitBob</key>
+    <map>
+      <key>Comment</key>
+      <string>Vertical bob amplitude during orbit in meters</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.0</real>
+    </map>
+    <key>CinematicCamHoverDistance</key>
+    <map>
+      <key>Comment</key>
+      <string>Fly Hover mean distance from the target in meters</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>2.5</real>
+    </map>
+    <key>CinematicCamHoverWander</key>
+    <map>
+      <key>Comment</key>
+      <string>Fly Hover wander/jitter intensity (0-3)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>1.0</real>
+    </map>
+    <key>CinematicCamHoverSpeed</key>
+    <map>
+      <key>Comment</key>
+      <string>Fly Hover motion speed multiplier</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.35</real>
+    </map>
+    <key>CinematicCamHoverHeight</key>
+    <map>
+      <key>Comment</key>
+      <string>Fly Hover mean height above the target position in meters</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.6</real>
+    </map>
+    <key>CinematicCamSweepLength</key>
+    <map>
+      <key>Comment</key>
+      <string>Sweep path length in meters</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>8.0</real>
+    </map>
+    <key>CinematicCamSweepDistance</key>
+    <map>
+      <key>Comment</key>
+      <string>Sweep lateral distance from the target in meters</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>3.0</real>
+    </map>
+    <key>CinematicCamSweepSpeed</key>
+    <map>
+      <key>Comment</key>
+      <string>Sweep travel speed in meters per second</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>1.0</real>
+    </map>
+    <key>CinematicCamSweepHeading</key>
+    <map>
+      <key>Comment</key>
+      <string>Sweep travel heading in degrees (world space)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.0</real>
+    </map>
+    <key>CinematicCamSweepHeight</key>
+    <map>
+      <key>Comment</key>
+      <string>Sweep height above the target position in meters</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.5</real>
+    </map>
+    <key>CinematicCamSweepPingPong</key>
+    <map>
+      <key>Comment</key>
+      <string>Sweep reverses at the ends instead of jumping back to the start</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>Boolean</string>
+      <key>Value</key>
+      <integer>1</integer>
+    </map>
+    <key>CinematicCamCraneRadius</key>
+    <map>
+      <key>Comment</key>
+      <string>Crane orbit radius in meters</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>4.0</real>
+    </map>
+    <key>CinematicCamCraneSpeed</key>
+    <map>
+      <key>Comment</key>
+      <string>Crane orbit angular speed in degrees per second</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>8.0</real>
+    </map>
+    <key>CinematicCamCraneMinHeight</key>
+    <map>
+      <key>Comment</key>
+      <string>Crane minimum height above the target in meters</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.2</real>
+    </map>
+    <key>CinematicCamCraneMaxHeight</key>
+    <map>
+      <key>Comment</key>
+      <string>Crane maximum height above the target in meters</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>4.0</real>
+    </map>
+    <key>CinematicCamCraneRisePeriod</key>
+    <map>
+      <key>Comment</key>
+      <string>Seconds for one full crane rise and descend cycle</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>14.0</real>
+    </map>
     <key>ConversationSortOrder</key>
     <map>
       <key>Comment</key>

@@ -62,6 +62,7 @@
 #include "llfocusmgr.h"
 #include "llurlfloaterdispatchhandler.h"
 #include "llviewerjoystick.h"
+#include "llcinematiccamera.h"
 #include "llcalc.h"
 #include "llconversationlog.h"
 #if LL_WINDOWS
@@ -6276,6 +6277,11 @@ void LLAppViewer::idle()
     if (gAgentPilot.isPlaying() && gAgentPilot.getOverrideCamera())
     {
         gAgentPilot.moveCamera();
+    }
+    else if (LLCinematicCamera::instance().isActive())
+    {
+        // automated cinematic camera (bone lock / orbit / hover / sweep / crane)
+        LLCinematicCamera::instance().updateCamera();
     }
     else if (LLViewerJoystick::getInstance()->getOverrideCamera())
     {

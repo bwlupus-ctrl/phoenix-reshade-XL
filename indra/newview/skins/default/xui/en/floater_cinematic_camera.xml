@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<floater
+ legacy_header_height="18"
+ can_resize="false"
+ height="460"
+ layout="topleft"
+ name="cinematic_camera"
+ title="Cinematic Camera"
+ save_rect="true"
+ single_instance="true"
+ width="320">
+    <check_box
+     control_name="CinematicCamEnabled"
+     follows="left|top"
+     height="18"
+     label="Enable Cinematic Camera"
+     layout="topleft"
+     left="12"
+     top="24"
+     name="CinematicCamEnabled"
+     tool_tip="Takes over the camera. Uncheck to return to the normal camera."
+     width="180" />
+    <combo_box
+     control_name="CinematicCamMode"
+     follows="left|top"
+     height="20"
+     layout="topleft"
+     left_pad="6"
+     top_delta="-1"
+     name="CinematicCamMode"
+     tool_tip="Camera motion pattern"
+     width="110">
+        <combo_box.item label="Bone Lock" name="cc_bone" value="1" />
+        <combo_box.item label="Orbit" name="cc_orbit" value="2" />
+        <combo_box.item label="Fly Hover" name="cc_hover" value="3" />
+        <combo_box.item label="Sweep" name="cc_sweep" value="4" />
+        <combo_box.item label="Crane" name="cc_crane" value="5" />
+    </combo_box>
+    <check_box
+     control_name="CinematicCamUseSelected"
+     follows="left|top"
+     height="16"
+     label="Target selected avatar"
+     layout="topleft"
+     left="12"
+     top_pad="6"
+     name="CinematicCamUseSelected"
+     tool_tip="Follow the selected avatar instead of yourself (falls back to you if nothing valid is selected)"
+     width="150" />
+    <check_box
+     control_name="CinematicCamLookAtHead"
+     follows="left|top"
+     height="16"
+     label="Frame head"
+     layout="topleft"
+     left_pad="6"
+     top_delta="0"
+     name="CinematicCamLookAtHead"
+     tool_tip="Patterns aim at the head joint instead of chest height"
+     width="100" />
+    <check_box
+     control_name="CinematicCamUseOperator"
+     follows="left|top"
+     height="16"
+     label="Handheld operator layer"
+     layout="topleft"
+     left="12"
+     top_pad="4"
+     name="CinematicCamUseOperator"
+     tool_tip="Route the cinematic camera through the procedural handheld operator for organic texture"
+     width="170" />
+    <slider
+     control_name="CinematicCamSmoothing"
+     decimal_digits="2"
+     follows="left|top"
+     height="16"
+     increment="0.01"
+     initial_value="0.35"
+     label="Smoothing (s)"
+     label_width="90"
+     layout="topleft"
+     left="12"
+     max_val="2"
+     min_val="0"
+     top_pad="8"
+     name="CinematicCamSmoothing"
+     tool_tip="Temporal smoothing. 0 = rigid lock (true GoPro), higher = steadicam glide"
+     width="290" />
+
+    <text follows="left|top" halign="left" height="14" layout="topleft" left="12" top_pad="12" width="290" name="bone_lbl" font="SansSerifBold">
+        Bone Lock (GoPro)
+    </text>
+    <combo_box
+     allow_text_entry="true"
+     control_name="CinematicCamJoint"
+     follows="left|top"
+     height="20"
+     layout="topleft"
+     left="12"
+     top_pad="4"
+     name="CinematicCamJoint"
+     tool_tip="Skeleton joint to mount the camera on (type any joint name, including Bento bones)"
+     width="140">
+        <combo_box.item label="mHead" name="j_head" value="mHead" />
+        <combo_box.item label="mNeck" name="j_neck" value="mNeck" />
+        <combo_box.item label="mChest" name="j_chest" value="mChest" />
+        <combo_box.item label="mTorso" name="j_torso" value="mTorso" />
+        <combo_box.item label="mPelvis" name="j_pelvis" value="mPelvis" />
+        <combo_box.item label="mShoulderRight" name="j_shr" value="mShoulderRight" />
+        <combo_box.item label="mElbowRight" name="j_elr" value="mElbowRight" />
+        <combo_box.item label="mWristRight" name="j_wrr" value="mWristRight" />
+        <combo_box.item label="mShoulderLeft" name="j_shl" value="mShoulderLeft" />
+        <combo_box.item label="mWristLeft" name="j_wrl" value="mWristLeft" />
+        <combo_box.item label="mHipRight" name="j_hipr" value="mHipRight" />
+        <combo_box.item label="mKneeRight" name="j_kner" value="mKneeRight" />
+        <combo_box.item label="mFootRight" name="j_footr" value="mFootRight" />
+        <combo_box.item label="mFootLeft" name="j_footl" value="mFootLeft" />
+    </combo_box>
+    <check_box
+     control_name="CinematicCamBoneHorizonLock"
+     follows="left|top"
+     height="16"
+     label="Level horizon"
+     layout="topleft"
+     left_pad="8"
+     top_delta="2"
+     name="CinematicCamBoneHorizonLock"
+     tool_tip="Keep the horizon level (gimbal) instead of rolling with the bone"
+     width="120" />
+    <spinner control_name="CinematicCamBoneOffsetForward" decimal_digits="2" follows="left|top" height="16" increment="0.05"
+     label="Fwd" label_width="28" layout="topleft" left="12" max_val="3" min_val="-3" top_pad="6"
+     name="CinematicCamBoneOffsetForward" tool_tip="Mount offset forward of the joint (m)" width="90" />
+    <spinner control_name="CinematicCamBoneOffsetLeft" decimal_digits="2" follows="left|top" height="16" increment="0.05"
+     label="Left" label_width="28" layout="topleft" left_pad="8" max_val="3" min_val="-3" top_delta="0"
+     name="CinematicCamBoneOffsetLeft" tool_tip="Mount offset left of the joint (m)" width="90" />
+    <spinner control_name="CinematicCamBoneOffsetUp" decimal_digits="2" follows="left|top" height="16" increment="0.05"
+     label="Up" label_width="24" layout="topleft" left_pad="8" max_val="3" min_val="-3" top_delta="0"
+     name="CinematicCamBoneOffsetUp" tool_tip="Mount offset above the joint (m)" width="86" />
+    <spinner control_name="CinematicCamBoneAimYaw" decimal_digits="0" follows="left|top" height="16" increment="5"
+     label="Yaw" label_width="28" layout="topleft" left="12" max_val="180" min_val="-180" top_pad="4"
+     name="CinematicCamBoneAimYaw" tool_tip="Aim trim yaw (deg)" width="90" />
+    <spinner control_name="CinematicCamBoneAimPitch" decimal_digits="0" follows="left|top" height="16" increment="5"
+     label="Pitch" label_width="32" layout="topleft" left_pad="8" max_val="180" min_val="-180" top_delta="0"
+     name="CinematicCamBoneAimPitch" tool_tip="Aim trim pitch (deg)" width="94" />
+    <spinner control_name="CinematicCamBoneAimRoll" decimal_digits="0" follows="left|top" height="16" increment="5"
+     label="Roll" label_width="26" layout="topleft" left_pad="8" max_val="180" min_val="-180" top_delta="0"
+     name="CinematicCamBoneAimRoll" tool_tip="Aim trim roll (deg)" width="88" />
+
+    <text follows="left|top" halign="left" height="14" layout="topleft" left="12" top_pad="12" width="290" name="orbit_lbl" font="SansSerifBold">
+        Orbit / Crane
+    </text>
+    <spinner control_name="CinematicCamOrbitRadius" decimal_digits="1" follows="left|top" height="16" increment="0.5"
+     label="Radius" label_width="42" layout="topleft" left="12" max_val="30" min_val="0.5" top_pad="4"
+     name="CinematicCamOrbitRadius" tool_tip="Orbit radius (m)" width="104" />
+    <spinner control_name="CinematicCamOrbitSpeed" decimal_digits="0" follows="left|top" height="16" increment="5"
+     label="Speed" label_width="40" layout="topleft" left_pad="8" max_val="180" min_val="-180" top_delta="0"
+     name="CinematicCamOrbitSpeed" tool_tip="Orbit speed (deg/s); negative reverses" width="100" />
+    <spinner control_name="CinematicCamOrbitHeight" decimal_digits="1" follows="left|top" height="16" increment="0.1"
+     label="Ht" label_width="20" layout="topleft" left_pad="8" max_val="20" min_val="-5" top_delta="0"
+     name="CinematicCamOrbitHeight" tool_tip="Height above target (m)" width="80" />
+    <spinner control_name="CinematicCamCraneMinHeight" decimal_digits="1" follows="left|top" height="16" increment="0.2"
+     label="Crane lo" label_width="52" layout="topleft" left="12" max_val="20" min_val="-5" top_pad="4"
+     name="CinematicCamCraneMinHeight" tool_tip="Crane minimum height (m)" width="114" />
+    <spinner control_name="CinematicCamCraneMaxHeight" decimal_digits="1" follows="left|top" height="16" increment="0.2"
+     label="hi" label_width="14" layout="topleft" left_pad="8" max_val="30" min_val="-5" top_delta="0"
+     name="CinematicCamCraneMaxHeight" tool_tip="Crane maximum height (m)" width="76" />
+    <spinner control_name="CinematicCamCraneRisePeriod" decimal_digits="0" follows="left|top" height="16" increment="1"
+     label="Cycle s" label_width="44" layout="topleft" left_pad="8" max_val="120" min_val="2" top_delta="0"
+     name="CinematicCamCraneRisePeriod" tool_tip="Seconds per full rise+descend cycle" width="104" />
+
+    <text follows="left|top" halign="left" height="14" layout="topleft" left="12" top_pad="12" width="290" name="hover_lbl" font="SansSerifBold">
+        Fly Hover
+    </text>
+    <spinner control_name="CinematicCamHoverDistance" decimal_digits="1" follows="left|top" height="16" increment="0.25"
+     label="Dist" label_width="28" layout="topleft" left="12" max_val="15" min_val="0.5" top_pad="4"
+     name="CinematicCamHoverDistance" tool_tip="Mean distance from target (m)" width="90" />
+    <spinner control_name="CinematicCamHoverWander" decimal_digits="2" follows="left|top" height="16" increment="0.05"
+     label="Wander" label_width="46" layout="topleft" left_pad="8" max_val="3" min_val="0" top_delta="0"
+     name="CinematicCamHoverWander" tool_tip="Wander/jitter intensity" width="106" />
+    <spinner control_name="CinematicCamHoverSpeed" decimal_digits="2" follows="left|top" height="16" increment="0.05"
+     label="Speed" label_width="40" layout="topleft" left_pad="8" max_val="3" min_val="0.01" top_delta="0"
+     name="CinematicCamHoverSpeed" tool_tip="Hover motion speed" width="88" />
+
+    <text follows="left|top" halign="left" height="14" layout="topleft" left="12" top_pad="12" width="290" name="sweep_lbl" font="SansSerifBold">
+        Sweep
+    </text>
+    <spinner control_name="CinematicCamSweepLength" decimal_digits="0" follows="left|top" height="16" increment="1"
+     label="Len" label_width="26" layout="topleft" left="12" max_val="50" min_val="1" top_pad="4"
+     name="CinematicCamSweepLength" tool_tip="Path length (m)" width="82" />
+    <spinner control_name="CinematicCamSweepDistance" decimal_digits="1" follows="left|top" height="16" increment="0.5"
+     label="Dist" label_width="28" layout="topleft" left_pad="8" max_val="30" min_val="0.5" top_delta="0"
+     name="CinematicCamSweepDistance" tool_tip="Lateral distance from target (m)" width="88" />
+    <spinner control_name="CinematicCamSweepSpeed" decimal_digits="2" follows="left|top" height="16" increment="0.1"
+     label="m/s" label_width="26" layout="topleft" left_pad="8" max_val="10" min_val="0.05" top_delta="0"
+     name="CinematicCamSweepSpeed" tool_tip="Travel speed (m/s)" width="88" />
+    <spinner control_name="CinematicCamSweepHeading" decimal_digits="0" follows="left|top" height="16" increment="15"
+     label="Heading" label_width="50" layout="topleft" left="12" max_val="360" min_val="0" top_pad="4"
+     name="CinematicCamSweepHeading" tool_tip="Travel heading (deg, world)" width="112" />
+    <check_box
+     control_name="CinematicCamSweepPingPong"
+     follows="left|top"
+     height="16"
+     label="Ping-pong"
+     layout="topleft"
+     left_pad="10"
+     top_delta="0"
+     name="CinematicCamSweepPingPong"
+     tool_tip="Reverse at the ends instead of jumping back to the start"
+     width="100" />
+</floater>
