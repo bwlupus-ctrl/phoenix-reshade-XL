@@ -5791,6 +5791,50 @@
       <key>Value</key>
       <real>2.75</real>
     </map>
+    <key>FlycamShakeEnabled</key>
+    <map>
+      <key>Comment</key>
+      <string>Enable handheld camera shake effect while in flycam mode</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>Boolean</string>
+      <key>Value</key>
+      <integer>0</integer>
+    </map>
+    <key>FlycamShakeTransIntensity</key>
+    <map>
+      <key>Comment</key>
+      <string>Positional flycam shake amplitude in meters (0.0 - 0.5)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.02</real>
+    </map>
+    <key>FlycamShakeRotIntensity</key>
+    <map>
+      <key>Comment</key>
+      <string>Rotational flycam shake amplitude in degrees of sway (0.0 - 5.0)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.25</real>
+    </map>
+    <key>FlycamShakeSpeed</key>
+    <map>
+      <key>Comment</key>
+      <string>Speed multiplier for flycam camera shake oscillation</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>1.0</real>
+    </map>
     <key>FlyingAtExit</key>
     <map>
       <key>Comment</key>

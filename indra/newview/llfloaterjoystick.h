@@ -96,6 +96,12 @@ private:
     F32 mBuildFeathering;
     F32 mFlycamFeathering;
 
+    // Flycam camera shake prefs
+    bool mFlycamShakeEnabled;
+    F32 mFlycamShakeTransIntensity;
+    F32 mFlycamShakeRotIntensity;
+    F32 mFlycamShakeSpeed;
+
     // Controls that can disable the flycam
     LLCheckBoxCtrl  *mCheckFlycamEnabled;
     LLComboBox      *mJoysticksCombo;

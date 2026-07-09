@@ -1376,10 +1376,60 @@ void LLViewerJoystick::moveFlycam(bool reset)
 
     LLViewerCamera::getInstance()->setView(sFlycamZoom);
     LLVector3 new_camera_pos = gAgent.getPosAgentFromGlobal(sFlycamPosition);
-    LLViewerCamera::getInstance()->setOrigin(new_camera_pos);
-    LLViewerCamera::getInstance()->mXAxis = LLVector3(mat.mMatrix[0]);
-    LLViewerCamera::getInstance()->mYAxis = LLVector3(mat.mMatrix[1]);
-    LLViewerCamera::getInstance()->mZAxis = LLVector3(mat.mMatrix[2]);
+
+    // Flycam camera shake: layered sine waves add a handheld wobble to position and
+    // orientation, mimicking the ReShade CameraShake effect. Translation and rotation
+    // are scaled independently (as ReShade splits them) and the shake is applied only
+    // to the camera we hand to the renderer this frame -- sFlycamPosition/sFlycamRotation
+    // are never mutated, so nothing drifts and toggling the effect off snaps cleanly back.
+    static LLCachedControl<bool>  shake_enabled(gSavedSettings, "FlycamShakeEnabled", false);
+    static LLCachedControl<F32>   shake_trans(gSavedSettings, "FlycamShakeTransIntensity", 0.02f);
+    static LLCachedControl<F32>   shake_rot(gSavedSettings, "FlycamShakeRotIntensity", 0.25f);
+    static LLCachedControl<F32>   shake_speed(gSavedSettings, "FlycamShakeSpeed", 1.0f);
+
+    if (shake_enabled && (shake_trans > 0.f || shake_rot > 0.f))
+    {
+        // Advance a wrapping clock so sinf() keeps full precision over long sessions.
+        static F32 sShakeTime = 0.f;
+        sShakeTime += gFrameIntervalSeconds.value() * shake_speed;
+        if (sShakeTime > F_TWO_PI * 1000.f)
+        {
+            sShakeTime = fmodf(sShakeTime, F_TWO_PI * 1000.f);
+        }
+
+        // Three overlapping inharmonic sines per axis -> organic, non-repeating motion.
+        // Each row sums to a max amplitude of 1.0, so the settings map directly to units.
+        F32 sx = sinf(sShakeTime * 1.70f) * 0.5f + sinf(sShakeTime * 3.53f) * 0.3f + sinf(sShakeTime * 7.13f) * 0.2f;
+        F32 sy = sinf(sShakeTime * 2.10f) * 0.5f + sinf(sShakeTime * 4.27f) * 0.3f + sinf(sShakeTime * 8.91f) * 0.2f;
+        F32 sz = sinf(sShakeTime * 1.30f) * 0.5f + sinf(sShakeTime * 5.07f) * 0.3f + sinf(sShakeTime * 6.63f) * 0.2f;
+
+        // Positional shake in camera-local space (forward/at axis damped so we don't dolly).
+        new_camera_pos += LLVector3(mat.mMatrix[0]) * (sx * shake_trans * 0.4f)   // at   (forward)
+                        + LLVector3(mat.mMatrix[1]) * (sy * shake_trans)          // left
+                        + LLVector3(mat.mMatrix[2]) * (sz * shake_trans);         // up
+
+        // Rotational wobble as a quaternion pre-multiplied onto the flycam rotation --
+        // same idiom the flycam itself uses above -- so the basis stays orthonormal.
+        // Setting is max sway in degrees; roll (about the at axis) is damped for comfort.
+        F32 rot_amp = shake_rot * DEG_TO_RAD;
+        F32 roll  = sx * rot_amp * 0.3f;   // about X / at
+        F32 pitch = sz * rot_amp;          // about Y / left  (look up/down)
+        F32 yaw   = sy * rot_amp;          // about Z / up     (look left/right)
+        LLMatrix3 wobble(roll, pitch, yaw);
+        LLMatrix3 shaken(LLQuaternion(wobble) * sFlycamRotation);
+
+        LLViewerCamera::getInstance()->setOrigin(new_camera_pos);
+        LLViewerCamera::getInstance()->mXAxis = LLVector3(shaken.mMatrix[0]);
+        LLViewerCamera::getInstance()->mYAxis = LLVector3(shaken.mMatrix[1]);
+        LLViewerCamera::getInstance()->mZAxis = LLVector3(shaken.mMatrix[2]);
+    }
+    else
+    {
+        LLViewerCamera::getInstance()->setOrigin(new_camera_pos);
+        LLViewerCamera::getInstance()->mXAxis = LLVector3(mat.mMatrix[0]);
+        LLViewerCamera::getInstance()->mYAxis = LLVector3(mat.mMatrix[1]);
+        LLViewerCamera::getInstance()->mZAxis = LLVector3(mat.mMatrix[2]);
+    }
 }
 
 // -----------------------------------------------------------------------------

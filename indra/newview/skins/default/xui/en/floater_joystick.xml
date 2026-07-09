@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <floater
  legacy_header_height="18"
- height="500"
+ height="548"
  layout="topleft"
  name="Joystick"
  help_topic="joystick"
@@ -1005,6 +1005,78 @@
      left="290"
      name="FlycamAxisDeadZone6"
      width="56" />
+    <text
+     type="string"
+     length="1"
+     follows="left|bottom"
+     halign="left"
+     layout="topleft"
+     left="14"
+     top="470"
+     height="14"
+     width="200"
+     name="camera_shake_lbl">
+        Flycam Camera Shake:
+    </text>
+    <check_box
+     control_name="FlycamShakeEnabled"
+     follows="left|bottom"
+     height="16"
+     label="Enable"
+     layout="topleft"
+     left="20"
+     top_pad="2"
+     name="FlycamShakeEnabled"
+     tool_tip="Adds a handheld camera shake wobble while flycam is active"
+     width="80" />
+    <spinner
+     control_name="FlycamShakeTransIntensity"
+     decimal_digits="3"
+     follows="left|bottom"
+     height="16"
+     increment="0.005"
+     label="Position (m)"
+     label_width="70"
+     layout="topleft"
+     left_pad="6"
+     max_val="0.5"
+     min_val="0"
+     name="FlycamShakeTransIntensity"
+     tool_tip="Positional shake amplitude in meters"
+     top_delta="0"
+     width="140" />
+    <spinner
+     control_name="FlycamShakeRotIntensity"
+     decimal_digits="2"
+     follows="left|bottom"
+     height="16"
+     increment="0.05"
+     label="Rotation (deg)"
+     label_width="80"
+     layout="topleft"
+     left_pad="10"
+     max_val="5"
+     min_val="0"
+     name="FlycamShakeRotIntensity"
+     tool_tip="Rotational shake amplitude in degrees of sway"
+     top_delta="0"
+     width="150" />
+    <spinner
+     control_name="FlycamShakeSpeed"
+     decimal_digits="2"
+     follows="left|bottom"
+     height="16"
+     increment="0.1"
+     label="Speed"
+     label_width="70"
+     layout="topleft"
+     left="20"
+     max_val="10"
+     min_val="0"
+     name="FlycamShakeSpeed"
+     tool_tip="How fast the shake oscillates"
+     top_pad="4"
+     width="140" />
     <button
      follows="left|top"
      height="22"

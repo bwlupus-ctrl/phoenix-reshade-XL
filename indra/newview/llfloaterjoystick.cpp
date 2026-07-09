@@ -322,6 +322,11 @@ void LLFloaterJoystick::initFromSettings()
     mAvatarFeathering = gSavedSettings.getF32("AvatarFeathering");
     mBuildFeathering = gSavedSettings.getF32("BuildFeathering");
     mFlycamFeathering = gSavedSettings.getF32("FlycamFeathering");
+
+    mFlycamShakeEnabled = gSavedSettings.getBOOL("FlycamShakeEnabled");
+    mFlycamShakeTransIntensity = gSavedSettings.getF32("FlycamShakeTransIntensity");
+    mFlycamShakeRotIntensity = gSavedSettings.getF32("FlycamShakeRotIntensity");
+    mFlycamShakeSpeed = gSavedSettings.getF32("FlycamShakeSpeed");
 }
 
 void LLFloaterJoystick::refresh()
@@ -489,6 +494,11 @@ void LLFloaterJoystick::cancel()
     gSavedSettings.setF32("AvatarFeathering", mAvatarFeathering);
     gSavedSettings.setF32("BuildFeathering", mBuildFeathering);
     gSavedSettings.setF32("FlycamFeathering", mFlycamFeathering);
+
+    gSavedSettings.setBOOL("FlycamShakeEnabled", mFlycamShakeEnabled);
+    gSavedSettings.setF32("FlycamShakeTransIntensity", mFlycamShakeTransIntensity);
+    gSavedSettings.setF32("FlycamShakeRotIntensity", mFlycamShakeRotIntensity);
+    gSavedSettings.setF32("FlycamShakeSpeed", mFlycamShakeSpeed);
 }
 
 void LLFloaterJoystick::onCommitJoystickEnabled(LLUICtrl*, void *joy_panel)

@@ -2218,14 +2218,13 @@ class LLAdvancedForceParamsToDefault : public view_listener_t
 //   ANIMATION SPEED    //
 //////////////////////////
 
-// Utility function to set all AV time factors to the same global value
+// Utility function to set the global animation speed. This drives a single
+// global multiplier that every motion controller reads live each frame -- self,
+// other avatars, and animated objects -- so it uniformly affects all skeletal
+// animation playing in the scene, including avatars that arrive after this call.
 static void set_all_animation_time_factors(F32  time_factor)
 {
-    LLMotionController::setCurrentTimeFactor(time_factor);
-    for (LLCharacter* character : LLCharacter::sInstances)
-    {
-        character->setAnimTimeFactor(time_factor);
-    }
+    LLMotionController::setGlobalTimeFactor(time_factor);
 }
 
 class LLAdvancedAnimTenFaster : public view_listener_t
@@ -2233,7 +2232,7 @@ class LLAdvancedAnimTenFaster : public view_listener_t
     bool handleEvent(const LLSD& userdata)
     {
         //LL_INFOS() << "LLAdvancedAnimTenFaster" << LL_ENDL;
-        F32 time_factor = LLMotionController::getCurrentTimeFactor();
+        F32 time_factor = LLMotionController::getGlobalTimeFactor();
         time_factor = llmin(time_factor + 0.1f, 2.f);   // Upper limit is 200% speed
         set_all_animation_time_factors(time_factor);
         return true;
@@ -2245,7 +2244,7 @@ class LLAdvancedAnimTenSlower : public view_listener_t
     bool handleEvent(const LLSD& userdata)
     {
         //LL_INFOS() << "LLAdvancedAnimTenSlower" << LL_ENDL;
-        F32 time_factor = LLMotionController::getCurrentTimeFactor();
+        F32 time_factor = LLMotionController::getGlobalTimeFactor();
         time_factor = llmax(time_factor - 0.1f, 0.1f);  // Lower limit is at 10% of normal speed
         set_all_animation_time_factors(time_factor);
         return true;

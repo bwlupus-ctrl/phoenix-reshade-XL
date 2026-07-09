@@ -176,6 +176,13 @@ public:
     static F32  getCurrentTimeFactor()              { return sCurrentTimeFactor;    };
     static void setCurrentTimeFactor(F32 factor)    { sCurrentTimeFactor = factor;  };
 
+    // Global animation speed multiplier applied to EVERY motion controller
+    // (self, other avatars, and animated objects) live each frame. Composes on
+    // top of the per-controller time factor and the impostor update factor, so
+    // it uniformly scales all skeletal animation playback in the scene.
+    static F32  getGlobalTimeFactor()               { return sGlobalTimeFactor;     };
+    static void setGlobalTimeFactor(F32 factor)     { sGlobalTimeFactor = factor;   };
+
 protected:
     // internal operations act on motion instances directly
     // as there can be duplicate motions per id during blending overlap
@@ -197,6 +204,7 @@ protected:
 protected:
     F32                 mTimeFactor;            // 1.f for normal speed
     static F32          sCurrentTimeFactor;     // Value to use for initialization
+    static F32          sGlobalTimeFactor;      // Global speed multiplier applied to all controllers each frame
     F32                 mUpdateFactor;          // <FS:Ansariel> Fix impostered animation speed based on a fix by Henri Beauchamp
     static LLMotionRegistry sRegistry;
     LLPoseBlender       mPoseBlender;

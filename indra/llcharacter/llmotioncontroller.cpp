@@ -45,6 +45,7 @@ const U32 MAX_MOTION_INSTANCES = 32;
 // Constants and statics
 //-----------------------------------------------------------------------------
 F32 LLMotionController::sCurrentTimeFactor = 1.f;
+F32 LLMotionController::sGlobalTimeFactor = 1.f;
 LLMotionRegistry LLMotionController::sRegistry;
 
 //-----------------------------------------------------------------------------
@@ -841,7 +842,8 @@ void LLMotionController::updateMotions(bool force_update)
     {
         // <FS:Ansariel> Fix impostered animation speed based on a fix by Henri Beauchamp
         //F32 update_time = mAnimTime + delta_time * mTimeFactor;
-        F32 update_time = mAnimTime + delta_time * mTimeFactor * mUpdateFactor;
+        // sGlobalTimeFactor scales every controller uniformly (see setGlobalTimeFactor).
+        F32 update_time = mAnimTime + delta_time * mTimeFactor * mUpdateFactor * sGlobalTimeFactor;
         // </FS:Ansariel>
         if (use_quantum)
         {
