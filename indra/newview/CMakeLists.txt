@@ -691,6 +691,7 @@ set(viewer_SOURCE_FILES
     llregioninfomodel.cpp
     llregionposition.cpp
     llremoteparcelrequest.cpp
+    llreshadebridge.cpp
     llsaveoutfitcombobtn.cpp
     #llsaveoutfitcombobtn.cpp #<FS:Ansariel> Unused
     llscenemonitor.cpp
@@ -1542,6 +1543,7 @@ set(viewer_HEADER_FILES
     llregioninfomodel.h
     llregionposition.h
     llremoteparcelrequest.h
+    llreshadebridge.h
     llresourcedata.h
     llrootview.h
     #llsavedsettingsglue.h #<FS:Ansariel> Unused

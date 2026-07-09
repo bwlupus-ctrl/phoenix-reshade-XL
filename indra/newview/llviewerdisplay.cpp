@@ -86,6 +86,7 @@
 #include "llvograss.h"
 #include "llworld.h"
 #include "pipeline.h"
+#include "llreshadebridge.h"
 
 #include <boost/json.hpp>
 // [RLVa:KB] - Checked: 2011-05-22 (RLVa-1.3.1a)
@@ -1640,6 +1641,10 @@ void render_ui(F32 zoom_factor, int subfield)
 
     // apply gamma correction and post effects
     gPipeline.renderFinalize();
+
+    // Scene is finalized and the G-buffer is still valid, but the UI has not yet
+    // been composited -- capture camera + G-buffer state for the ReShade bridge here.
+    LLReShadeBridge::instance().gatherFrame();
 
     {
         LLGLState::checkStates();
