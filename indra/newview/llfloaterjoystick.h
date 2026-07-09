@@ -96,11 +96,14 @@ private:
     F32 mBuildFeathering;
     F32 mFlycamFeathering;
 
-    // Flycam camera shake prefs
-    bool mFlycamShakeEnabled;
-    F32 mFlycamShakeTransIntensity;
-    F32 mFlycamShakeRotIntensity;
-    F32 mFlycamShakeSpeed;
+    // Flycam camera operator prefs (floater-exposed subset)
+    bool mFlycamOperatorEnabled;
+    S32 mFlycamOperatorStyle;
+    S32 mFlycamOperatorProfile;
+    F32 mFlycamOperatorMaster;
+    F32 mFlycamOperatorReactivity;
+    F32 mFlycamOperatorIdleIntensity;
+    bool mFlycamOperatorForceWalk;
 
     // Controls that can disable the flycam
     LLCheckBoxCtrl  *mCheckFlycamEnabled;

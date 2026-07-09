@@ -1015,68 +1015,118 @@
      top="470"
      height="14"
      width="200"
-     name="camera_shake_lbl">
-        Flycam Camera Shake:
+     name="camera_operator_lbl">
+        Flycam Camera Operator:
     </text>
     <check_box
-     control_name="FlycamShakeEnabled"
+     control_name="FlycamOperatorEnabled"
      follows="left|bottom"
      height="16"
      label="Enable"
      layout="topleft"
      left="20"
      top_pad="2"
-     name="FlycamShakeEnabled"
-     tool_tip="Adds a handheld camera shake wobble while flycam is active"
+     name="FlycamOperatorEnabled"
+     tool_tip="Procedural handheld camera operator while flycam is active. Fine controls under Debug Settings: FlycamOperator*"
      width="80" />
-    <spinner
-     control_name="FlycamShakeTransIntensity"
-     decimal_digits="3"
+    <combo_box
+     control_name="FlycamOperatorStyle"
      follows="left|bottom"
-     height="16"
-     increment="0.005"
-     label="Position (m)"
-     label_width="70"
+     height="20"
      layout="topleft"
      left_pad="6"
-     max_val="0.5"
-     min_val="0"
-     name="FlycamShakeTransIntensity"
-     tool_tip="Positional shake amplitude in meters"
+     top_delta="-2"
+     name="FlycamOperatorStyle"
+     tool_tip="Who is holding the camera? Sets the baseline idle motion character"
+     width="140">
+        <combo_box.item label="Custom" name="op_custom" value="0" />
+        <combo_box.item label="Tripod / Sticks" name="op_tripod" value="1" />
+        <combo_box.item label="Subtle Handheld" name="op_subtle" value="2" />
+        <combo_box.item label="Documentary" name="op_documentary" value="3" />
+        <combo_box.item label="Run &amp; Gun" name="op_rungun" value="4" />
+        <combo_box.item label="Shoulder Rig" name="op_shoulder" value="5" />
+        <combo_box.item label="Gimbal Float" name="op_gimbal" value="6" />
+        <combo_box.item label="Verite (Chaotic)" name="op_verite" value="7" />
+        <combo_box.item label="Breathing Only" name="op_breathing" value="8" />
+    </combo_box>
+    <combo_box
+     control_name="FlycamOperatorProfile"
+     follows="left|bottom"
+     height="20"
+     layout="topleft"
+     left_pad="6"
      top_delta="0"
-     width="140" />
+     name="FlycamOperatorProfile"
+     tool_tip="How does the operator react to camera movement? Layered over the style"
+     width="120">
+        <combo_box.item label="Natural" name="pr_natural" value="0" />
+        <combo_box.item label="Locked" name="pr_locked" value="1" />
+        <combo_box.item label="Follow" name="pr_follow" value="2" />
+        <combo_box.item label="Restless" name="pr_restless" value="3" />
+        <combo_box.item label="Composed" name="pr_composed" value="4" />
+        <combo_box.item label="Drift" name="pr_drift" value="5" />
+        <combo_box.item label="Snap" name="pr_snap" value="6" />
+        <combo_box.item label="March" name="pr_march" value="7" />
+    </combo_box>
     <spinner
-     control_name="FlycamShakeRotIntensity"
+     control_name="FlycamOperatorMaster"
      decimal_digits="2"
      follows="left|bottom"
      height="16"
      increment="0.05"
-     label="Rotation (deg)"
-     label_width="80"
+     label="Master"
+     label_width="45"
      layout="topleft"
-     left_pad="10"
-     max_val="5"
+     left="20"
+     max_val="2"
      min_val="0"
-     name="FlycamShakeRotIntensity"
-     tool_tip="Rotational shake amplitude in degrees of sway"
-     top_delta="0"
-     width="150" />
+     name="FlycamOperatorMaster"
+     tool_tip="Overall motion scale: 0 = static, 1 = normal, 2 = exaggerated"
+     top_pad="6"
+     width="105" />
     <spinner
-     control_name="FlycamShakeSpeed"
+     control_name="FlycamOperatorReactivity"
      decimal_digits="2"
      follows="left|bottom"
      height="16"
-     increment="0.1"
-     label="Speed"
-     label_width="70"
+     increment="0.05"
+     label="Reactivity"
+     label_width="60"
      layout="topleft"
-     left="20"
-     max_val="10"
+     left_pad="10"
+     max_val="2"
      min_val="0"
-     name="FlycamShakeSpeed"
-     tool_tip="How fast the shake oscillates"
-     top_pad="4"
-     width="140" />
+     name="FlycamOperatorReactivity"
+     tool_tip="Gain on motion-reactive response only (whip, drag, settle, gait)"
+     top_delta="0"
+     width="120" />
+    <spinner
+     control_name="FlycamOperatorIdleIntensity"
+     decimal_digits="2"
+     follows="left|bottom"
+     height="16"
+     increment="0.05"
+     label="Idle"
+     label_width="30"
+     layout="topleft"
+     left_pad="10"
+     max_val="2"
+     min_val="0"
+     name="FlycamOperatorIdleIntensity"
+     tool_tip="Procedural idle motion intensity"
+     top_delta="0"
+     width="90" />
+    <check_box
+     control_name="FlycamOperatorForceWalk"
+     follows="left|bottom"
+     height="16"
+     label="Walk"
+     layout="topleft"
+     left_pad="10"
+     top_delta="0"
+     name="FlycamOperatorForceWalk"
+     tool_tip="Force the walking gait at full strength even when the camera is static"
+     width="60" />
     <button
      follows="left|top"
      height="22"

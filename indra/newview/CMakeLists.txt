@@ -251,6 +251,7 @@ set(viewer_SOURCE_FILES
     llbrowsernotification.cpp
     llbuycurrencyhtml.cpp
     llcallingcard.cpp
+    llcameraoperator.cpp
     llchannelmanager.cpp
     llchatbar.cpp
     llchathistory.cpp
@@ -1114,6 +1115,7 @@ set(viewer_HEADER_FILES
     llbox.h
     llbuycurrencyhtml.h
     llcallingcard.h
+    llcameraoperator.h
     llcapabilityprovider.h
     llchannelmanager.h
     llchatbar.h

@@ -5791,10 +5791,10 @@
       <key>Value</key>
       <real>2.75</real>
     </map>
-    <key>FlycamShakeEnabled</key>
+    <key>FlycamOperatorEnabled</key>
     <map>
       <key>Comment</key>
-      <string>Enable handheld camera shake effect while in flycam mode</string>
+      <string>Enable the procedural handheld camera operator while in flycam mode</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
@@ -5802,21 +5802,186 @@
       <key>Value</key>
       <integer>0</integer>
     </map>
-    <key>FlycamShakeTransIntensity</key>
+    <key>FlycamOperatorStyle</key>
     <map>
       <key>Comment</key>
-      <string>Positional flycam shake amplitude in meters (0.0 - 0.5)</string>
+      <string>Operator style: 0=Custom 1=Tripod 2=Subtle Handheld 3=Documentary 4=Run and Gun 5=Shoulder Rig 6=Gimbal Float 7=Verite 8=Breathing Only</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>S32</string>
+      <key>Value</key>
+      <integer>3</integer>
+    </map>
+    <key>FlycamOperatorProfile</key>
+    <map>
+      <key>Comment</key>
+      <string>Motion profile: 0=Natural 1=Locked 2=Follow 3=Restless 4=Composed 5=Drift 6=Snap 7=March</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>S32</string>
+      <key>Value</key>
+      <integer>0</integer>
+    </map>
+    <key>FlycamOperatorProfileInfluence</key>
+    <map>
+      <key>Comment</key>
+      <string>How strongly the motion profile overrides the style (0-1)</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
       <string>F32</string>
       <key>Value</key>
-      <real>0.02</real>
+      <real>0.7</real>
     </map>
-    <key>FlycamShakeRotIntensity</key>
+    <key>FlycamOperatorMaster</key>
     <map>
       <key>Comment</key>
-      <string>Rotational flycam shake amplitude in degrees of sway (0.0 - 5.0)</string>
+      <string>Master intensity for all camera operator motion (0-2)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>1.0</real>
+    </map>
+    <key>FlycamOperatorReactivity</key>
+    <map>
+      <key>Comment</key>
+      <string>Gain on motion-reactive response only, idle unaffected (0-2)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>1.0</real>
+    </map>
+    <key>FlycamOperatorIdleIntensity</key>
+    <map>
+      <key>Comment</key>
+      <string>Multiplier for procedural idle motion intensity (0-2)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>1.0</real>
+    </map>
+    <key>FlycamOperatorTremorDamping</key>
+    <map>
+      <key>Comment</key>
+      <string>Operator hand stability: 0=jittery, 1=smooth and heavy</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.6</real>
+    </map>
+    <key>FlycamOperatorPanTiltFreq</key>
+    <map>
+      <key>Comment</key>
+      <string>Idle pan/tilt wander frequency in Hz</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.6</real>
+    </map>
+    <key>FlycamOperatorPanAmount</key>
+    <map>
+      <key>Comment</key>
+      <string>Idle pan (yaw) wander magnitude in degrees</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.6</real>
+    </map>
+    <key>FlycamOperatorPanMode</key>
+    <map>
+      <key>Comment</key>
+      <string>Pan axis waveform: 0=Filtered Noise 1=Sine Weave 2=Legacy (match tilt)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>S32</string>
+      <key>Value</key>
+      <integer>0</integer>
+    </map>
+    <key>FlycamOperatorPanSmoothness</key>
+    <map>
+      <key>Comment</key>
+      <string>High-frequency roll-off on the pan axis only (0-1)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.6</real>
+    </map>
+    <key>FlycamOperatorPanReactSmoothing</key>
+    <map>
+      <key>Comment</key>
+      <string>Extra pan smoothing that engages while actually panning (0-1)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.5</real>
+    </map>
+    <key>FlycamOperatorTiltAmount</key>
+    <map>
+      <key>Comment</key>
+      <string>Idle tilt (pitch) wander magnitude in degrees</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.6</real>
+    </map>
+    <key>FlycamOperatorRollFreq</key>
+    <map>
+      <key>Comment</key>
+      <string>Idle roll wander frequency in Hz</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.3</real>
+    </map>
+    <key>FlycamOperatorRollAmount</key>
+    <map>
+      <key>Comment</key>
+      <string>Idle roll wander magnitude in degrees</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.5</real>
+    </map>
+    <key>FlycamOperatorRollDamping</key>
+    <map>
+      <key>Comment</key>
+      <string>Strips high-frequency jitter from the roll axis only (0-1)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.65</real>
+    </map>
+    <key>FlycamOperatorBreathFreq</key>
+    <map>
+      <key>Comment</key>
+      <string>Breathing (FOV pulse) frequency in Hz</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
@@ -5824,16 +5989,324 @@
       <key>Value</key>
       <real>0.25</real>
     </map>
-    <key>FlycamShakeSpeed</key>
+    <key>FlycamOperatorBreathAmount</key>
     <map>
       <key>Comment</key>
-      <string>Speed multiplier for flycam camera shake oscillation</string>
+      <string>Breathing FOV oscillation in percent</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>1.5</real>
+    </map>
+    <key>FlycamOperatorBreathLift</key>
+    <map>
+      <key>Comment</key>
+      <string>Vertical chest-rise translation coupled to the breathing cycle (0-1)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.2</real>
+    </map>
+    <key>FlycamOperatorRecomposeAmount</key>
+    <map>
+      <key>Comment</key>
+      <string>Sparse operator re-framing nudge magnitude in degrees (0 = off)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.35</real>
+    </map>
+    <key>FlycamOperatorRecomposeInterval</key>
+    <map>
+      <key>Comment</key>
+      <string>Average seconds between re-framing nudges</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>7.0</real>
+    </map>
+    <key>FlycamOperatorTimeSpeed</key>
+    <map>
+      <key>Comment</key>
+      <string>Playback speed for idle motion timing (phase-continuous)</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
       <string>F32</string>
       <key>Value</key>
       <real>1.0</real>
+    </map>
+    <key>FlycamOperatorSeed</key>
+    <map>
+      <key>Comment</key>
+      <string>Random seed fingerprint for the procedural motion pattern</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.0</real>
+    </map>
+    <key>FlycamOperatorMotionPan</key>
+    <map>
+      <key>Comment</key>
+      <string>How hard camera movement drives the pan axis (0-2)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>1.0</real>
+    </map>
+    <key>FlycamOperatorMotionTilt</key>
+    <map>
+      <key>Comment</key>
+      <string>How hard camera movement drives the tilt axis (0-2)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>1.0</real>
+    </map>
+    <key>FlycamOperatorMotionRoll</key>
+    <map>
+      <key>Comment</key>
+      <string>How hard camera movement drives the roll axis (0-2)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>1.0</real>
+    </map>
+    <key>FlycamOperatorMotionBreath</key>
+    <map>
+      <key>Comment</key>
+      <string>How hard camera movement amplifies the breathing pulse (0-2)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>1.0</real>
+    </map>
+    <key>FlycamOperatorOnset</key>
+    <map>
+      <key>Comment</key>
+      <string>Inertia whip when motion starts (0-3)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>1.0</real>
+    </map>
+    <key>FlycamOperatorDrag</key>
+    <map>
+      <key>Comment</key>
+      <string>Inertial lead-lag drag during pans; negative flips direction (-2 to 2)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>1.0</real>
+    </map>
+    <key>FlycamOperatorSettle</key>
+    <map>
+      <key>Comment</key>
+      <string>Overshoot bounce when camera motion stops (0-3)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>1.0</real>
+    </map>
+    <key>FlycamOperatorSettleFreq</key>
+    <map>
+      <key>Comment</key>
+      <string>Settle bounce oscillation frequency in Hz</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>8.0</real>
+    </map>
+    <key>FlycamOperatorSettleDecay</key>
+    <map>
+      <key>Comment</key>
+      <string>Settle bounce decay retain per frame at 30fps (0.7-0.97)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.85</real>
+    </map>
+    <key>FlycamOperatorForceWalk</key>
+    <map>
+      <key>Comment</key>
+      <string>Gait runs at full strength even when the camera is static</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>Boolean</string>
+      <key>Value</key>
+      <integer>0</integer>
+    </map>
+    <key>FlycamOperatorWalkCadence</key>
+    <map>
+      <key>Comment</key>
+      <string>Walk cadence multiplier; 1.0 = about 120 bpm</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>1.0</real>
+    </map>
+    <key>FlycamOperatorCadenceDrive</key>
+    <map>
+      <key>Comment</key>
+      <string>How much movement speed raises the step rate (0-1)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.25</real>
+    </map>
+    <key>FlycamOperatorForwardWalkBias</key>
+    <map>
+      <key>Comment</key>
+      <string>How much forward/back motion induces the gait (0-3)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>1.0</real>
+    </map>
+    <key>FlycamOperatorLateralWalkBias</key>
+    <map>
+      <key>Comment</key>
+      <string>How much lateral panning induces the gait; keep low (0-2)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.25</real>
+    </map>
+    <key>FlycamOperatorStepBob</key>
+    <map>
+      <key>Comment</key>
+      <string>Vertical head bounce per step in meters</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.015</real>
+    </map>
+    <key>FlycamOperatorLateralStep</key>
+    <map>
+      <key>Comment</key>
+      <string>Side-to-side head shift per stride in meters</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.008</real>
+    </map>
+    <key>FlycamOperatorStepRoll</key>
+    <map>
+      <key>Comment</key>
+      <string>Frame rotation per step (shoulder roll) in degrees</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.35</real>
+    </map>
+    <key>FlycamOperatorEnergyTrim</key>
+    <map>
+      <key>Comment</key>
+      <string>Multiplier on how much motion response feeds into tremor (0-2)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>1.0</real>
+    </map>
+    <key>FlycamOperatorMotionCalm</key>
+    <map>
+      <key>Comment</key>
+      <string>How much reactive motion dampens the idle tremor (0-2)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>1.0</real>
+    </map>
+    <key>FlycamOperatorSmoothing</key>
+    <map>
+      <key>Comment</key>
+      <string>Global multiplier on motion smoothing responsiveness (0.7-1.1)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>1.0</real>
+    </map>
+    <key>FlycamOperatorGaitCoupling</key>
+    <map>
+      <key>Comment</key>
+      <string>Multiplier on how strongly motion drives the walk gait (0-3)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>1.0</real>
+    </map>
+    <key>FlycamOperatorRefLinearSpeed</key>
+    <map>
+      <key>Comment</key>
+      <string>Reference linear speed in m/s that counts as a normal move</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>3.0</real>
+    </map>
+    <key>FlycamOperatorRefAngularSpeed</key>
+    <map>
+      <key>Comment</key>
+      <string>Reference angular speed in deg/s that counts as a normal pan</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>60.0</real>
     </map>
     <key>FlyingAtExit</key>
     <map>
