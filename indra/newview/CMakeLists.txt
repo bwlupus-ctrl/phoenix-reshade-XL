@@ -253,6 +253,7 @@ set(viewer_SOURCE_FILES
     llcallingcard.cpp
     llcameraoperator.cpp
     llcinematiccamera.cpp
+    llflycamrecorder.cpp
     llchannelmanager.cpp
     llchatbar.cpp
     llchathistory.cpp
@@ -361,6 +362,7 @@ set(viewer_SOURCE_FILES
     llfloaterexperienceprofile.cpp
     llfloaterexperiences.cpp
     llfloaterfixedenvironment.cpp
+    llfloaterflycamrecorder.cpp
     llfloaterfonttest.cpp
     llfloaterforgetuser.cpp
     llfloatergesture.cpp
@@ -1118,6 +1120,7 @@ set(viewer_HEADER_FILES
     llcallingcard.h
     llcameraoperator.h
     llcinematiccamera.h
+    llflycamrecorder.h
     llcapabilityprovider.h
     llchannelmanager.h
     llchatbar.h
@@ -1227,6 +1230,7 @@ set(viewer_HEADER_FILES
     llfloaterexperienceprofile.h
     llfloaterexperiences.h
     llfloaterfixedenvironment.h
+    llfloaterflycamrecorder.h
     llfloaterfonttest.h
     llfloaterforgetuser.h
     llfloatergesture.h

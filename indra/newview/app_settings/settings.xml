@@ -6165,6 +6165,61 @@
       <key>Value</key>
       <integer>0</integer>
     </map>
+    <key>FlycamRecSampleRate</key>
+    <map>
+      <key>Comment</key>
+      <string>Flycam recorder: keyframes captured per second while recording (1-120)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>30.0</real>
+    </map>
+    <key>FlycamRecSpeed</key>
+    <map>
+      <key>Comment</key>
+      <string>Flycam recorder: playback speed multiplier (0.05-5)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>1.0</real>
+    </map>
+    <key>FlycamRecLoopMode</key>
+    <map>
+      <key>Comment</key>
+      <string>Flycam recorder: at end of take 0=hold last frame 1=loop 2=ping-pong</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>S32</string>
+      <key>Value</key>
+      <integer>0</integer>
+    </map>
+    <key>FlycamRecSmooth</key>
+    <map>
+      <key>Comment</key>
+      <string>Flycam recorder: smooth spline interpolation (Catmull-Rom/squad) instead of linear</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>Boolean</string>
+      <key>Value</key>
+      <integer>1</integer>
+    </map>
+    <key>FlycamRecUseOperator</key>
+    <map>
+      <key>Comment</key>
+      <string>Flycam recorder: layer the procedural handheld operator on playback</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>Boolean</string>
+      <key>Value</key>
+      <integer>0</integer>
+    </map>
     <key>FlycamOperatorStyle</key>
     <map>
       <key>Comment</key>

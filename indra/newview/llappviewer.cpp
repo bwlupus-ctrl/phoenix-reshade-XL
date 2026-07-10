@@ -63,6 +63,7 @@
 #include "llurlfloaterdispatchhandler.h"
 #include "llviewerjoystick.h"
 #include "llcinematiccamera.h"
+#include "llflycamrecorder.h"
 #include "llcalc.h"
 #include "llconversationlog.h"
 #if LL_WINDOWS
@@ -6278,6 +6279,11 @@ void LLAppViewer::idle()
     {
         gAgentPilot.moveCamera();
     }
+    else if (LLFlycamRecorder::instance().isPlaybackActive())
+    {
+        // recorded camera path playback / scrubbing
+        LLFlycamRecorder::instance().updateCamera();
+    }
     else if (LLCinematicCamera::instance().isActive())
     {
         // automated cinematic camera (bone lock / orbit / hover / sweep / crane)
@@ -6296,6 +6302,9 @@ void LLAppViewer::idle()
 
         gAgentCamera.updateCamera();
     }
+
+    // sample the (now final) camera into the flycam recorder when recording
+    LLFlycamRecorder::instance().onIdleFrame();
 
     // update media focus
     LLViewerMediaFocus::getInstance()->update();

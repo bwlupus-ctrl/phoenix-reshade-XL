@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<floater
+ legacy_header_height="18"
+ can_resize="false"
+ height="332"
+ layout="topleft"
+ name="flycam_recorder"
+ title="Flycam Recorder"
+ save_rect="true"
+ single_instance="true"
+ width="330">
+    <button
+     follows="left|top"
+     height="23"
+     label="Record"
+     layout="topleft"
+     left="12"
+     top="24"
+     name="btn_record"
+     tool_tip="Record the live camera (flycam, mouse, or cinematic) into a take"
+     width="72" />
+    <button
+     follows="left|top"
+     height="23"
+     label="Play"
+     layout="topleft"
+     left_pad="6"
+     top_delta="0"
+     name="btn_play"
+     tool_tip="Play or pause the recorded take (takes over the camera)"
+     width="72" />
+    <button
+     follows="left|top"
+     height="23"
+     label="Stop"
+     layout="topleft"
+     left_pad="6"
+     top_delta="0"
+     name="btn_stop"
+     tool_tip="Stop and give the camera back"
+     width="72" />
+    <button
+     follows="left|top"
+     height="23"
+     label="Clear"
+     layout="topleft"
+     left_pad="6"
+     top_delta="0"
+     name="btn_clear"
+     tool_tip="Discard the current take"
+     width="72" />
+    <slider
+     decimal_digits="1"
+     follows="left|top"
+     height="16"
+     increment="0.1"
+     initial_value="0"
+     label="Time"
+     label_width="40"
+     layout="topleft"
+     left="12"
+     max_val="1"
+     min_val="0"
+     top_pad="12"
+     name="scrub_slider"
+     tool_tip="Scrub through the take. Dragging while stopped previews that moment"
+     width="306" />
+    <text
+     follows="left|top"
+     halign="left"
+     height="14"
+     layout="topleft"
+     left="12"
+     top_pad="4"
+     width="306"
+     name="time_lbl">
+        0.0 / 0.0 s   0 keys
+    </text>
+    <text
+     follows="left|top"
+     halign="left"
+     height="14"
+     layout="topleft"
+     left="12"
+     top_pad="2"
+     width="306"
+     name="status_lbl"
+     text_color="EmphasisColor">
+    </text>
+
+    <text follows="left|top" halign="left" height="14" layout="topleft" left="12" top_pad="10" width="306" name="playback_lbl" font="SansSerifBold">
+        Playback
+    </text>
+    <slider
+     control_name="FlycamRecSpeed"
+     decimal_digits="2"
+     follows="left|top"
+     height="16"
+     increment="0.05"
+     initial_value="1"
+     label="Speed"
+     label_width="90"
+     layout="topleft"
+     left="12"
+     max_val="5"
+     min_val="0.05"
+     top_pad="6"
+     name="FlycamRecSpeed"
+     tool_tip="Playback speed multiplier (0.5 = slow motion, 2 = double time)"
+     width="306" />
+    <combo_box
+     control_name="FlycamRecLoopMode"
+     follows="left|top"
+     height="20"
+     layout="topleft"
+     left="12"
+     top_pad="6"
+     name="FlycamRecLoopMode"
+     tool_tip="What happens when playback reaches the end of the take"
+     width="140">
+        <combo_box.item label="Hold last frame" name="loop_hold" value="0" />
+        <combo_box.item label="Loop" name="loop_repeat" value="1" />
+        <combo_box.item label="Ping-pong" name="loop_pingpong" value="2" />
+    </combo_box>
+    <check_box
+     control_name="FlycamRecSmooth"
+     follows="left|top"
+     height="16"
+     label="Smooth splines"
+     layout="topleft"
+     left_pad="10"
+     top_delta="2"
+     name="FlycamRecSmooth"
+     tool_tip="Catmull-Rom / squad interpolation between keyframes. Uncheck for straight linear segments"
+     width="150" />
+    <check_box
+     control_name="FlycamRecUseOperator"
+     follows="left|top"
+     height="16"
+     label="Handheld operator layer on playback"
+     layout="topleft"
+     left="12"
+     top_pad="6"
+     name="FlycamRecUseOperator"
+     tool_tip="Route playback through the procedural handheld operator. Record a clean pass with the operator off, then add the texture here"
+     width="290" />
+
+    <text follows="left|top" halign="left" height="14" layout="topleft" left="12" top_pad="10" width="306" name="recording_lbl" font="SansSerifBold">
+        Recording
+    </text>
+    <slider
+     control_name="FlycamRecSampleRate"
+     decimal_digits="0"
+     follows="left|top"
+     height="16"
+     increment="1"
+     initial_value="30"
+     label="Sample rate (Hz)"
+     label_width="110"
+     layout="topleft"
+     left="12"
+     max_val="120"
+     min_val="1"
+     top_pad="6"
+     name="FlycamRecSampleRate"
+     tool_tip="Keyframes captured per second. 30 is plenty with smoothing on; lower makes smaller, easier-to-hand-edit files"
+     width="306" />
+
+    <text follows="left|top" halign="left" height="14" layout="topleft" left="12" top_pad="10" width="306" name="file_lbl" font="SansSerifBold">
+        Take file (XML)
+    </text>
+    <button
+     follows="left|top"
+     height="23"
+     label="Save..."
+     layout="topleft"
+     left="12"
+     top_pad="6"
+     name="btn_save"
+     tool_tip="Save the take to a hand-editable XML file"
+     width="150" />
+    <button
+     follows="left|top"
+     height="23"
+     label="Load..."
+     layout="topleft"
+     left_pad="6"
+     top_delta="0"
+     name="btn_load"
+     tool_tip="Load a take from an XML file"
+     width="150" />
+</floater>
