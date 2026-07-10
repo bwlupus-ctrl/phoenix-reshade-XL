@@ -2,7 +2,7 @@
 <floater
  legacy_header_height="18"
  can_resize="false"
- height="332"
+ height="360"
  layout="topleft"
  name="flycam_recorder"
  title="Flycam Recorder"
@@ -133,6 +133,32 @@
      name="FlycamRecSmooth"
      tool_tip="Catmull-Rom / squad interpolation between keyframes. Uncheck for straight linear segments"
      width="150" />
+    <combo_box
+     control_name="FlycamRecAnchorMode"
+     follows="left|top"
+     height="20"
+     layout="topleft"
+     left="12"
+     top_pad="6"
+     name="FlycamRecAnchorMode"
+     tool_tip="Where the path plays: at its recorded world position, or re-anchored to a subject. Anchored modes map the path's offsets from the recording avatar onto the new anchor"
+     width="180">
+        <combo_box.item label="World (as recorded)" name="anchor_world" value="0" />
+        <combo_box.item label="My avatar" name="anchor_self" value="1" />
+        <combo_box.item label="Selected object/avatar" name="anchor_sel" value="2" />
+        <combo_box.item label="Camera at play start" name="anchor_cam" value="3" />
+    </combo_box>
+    <check_box
+     control_name="FlycamRecFollowAnchor"
+     follows="left|top"
+     height="16"
+     label="Follow anchor"
+     layout="topleft"
+     left_pad="10"
+     top_delta="2"
+     name="FlycamRecFollowAnchor"
+     tool_tip="Re-anchor every frame so the whole move rides a walking avatar or moving object"
+     width="120" />
     <check_box
      control_name="FlycamRecUseOperator"
      follows="left|top"

@@ -54,6 +54,14 @@ public:
         LOOP_PINGPONG   = 2,
     };
 
+    enum EAnchorMode
+    {
+        ANCHOR_WORLD     = 0,   // absolute grid coordinates, as recorded
+        ANCHOR_SELF      = 1,   // re-anchor the path to my avatar
+        ANCHOR_SELECTION = 2,   // re-anchor to the selected object/avatar
+        ANCHOR_CAMERA    = 3,   // path starts at the camera pose at Play
+    };
+
     struct Keyframe
     {
         F32          mTime = 0.f;       // seconds from take start
@@ -109,6 +117,18 @@ private:
     // (keeps nlerp/squad from taking the long way around).
     void canonicalizeRotations();
 
+    // ---- anchoring (relative playback) ----
+    // The recorded anchor frame: the recording avatar's pose at record
+    // start (falls back to the first keyframe for hand-made files).
+    void latchRecordAnchor();
+    // Resolve the live anchor for the current mode. Returns false when the
+    // mode is ANCHOR_WORLD (no transform). Latches for static playback;
+    // FlycamRecFollowAnchor re-resolves every frame.
+    bool resolveLiveAnchor(LLVector3d& pos, F32& yaw);
+    // Map a recorded pose through recorded-anchor -> live-anchor (yaw-only
+    // rotation, so the horizon stays level).
+    void applyAnchor(LLVector3d& pos, LLQuaternion& rot);
+
     // ---- state ----
     EState               mState = STATE_IDLE;
     std::vector<Keyframe> mKeys;
@@ -116,6 +136,16 @@ private:
     F32                  mPlayDir = 1.f;        // ping-pong direction
     LLTimer              mRecordTimer;
     std::string          mStatus;
+
+    // recorded anchor frame (saved with the take)
+    bool                 mHaveRecAnchor = false;
+    LLVector3d           mRecAnchorPos;
+    F32                  mRecAnchorYaw = 0.f;
+    // live anchor, latched at playback start (or followed per-frame)
+    bool                 mHaveLiveAnchor = false;
+    S32                  mLiveAnchorMode = -1;   // mode the latch was taken in
+    LLVector3d           mLiveAnchorPos;
+    F32                  mLiveAnchorYaw = 0.f;
 
     // previous playback pose, for feeding the handheld operator
     bool                 mHavePrev = false;

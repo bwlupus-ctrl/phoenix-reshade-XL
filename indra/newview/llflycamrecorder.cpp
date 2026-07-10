@@ -21,14 +21,18 @@
 #include "llsdserialize.h"
 #include "llsdutil.h"           // llsd::inArray
 #include "llsdutil_math.h"      // ll_sd_from_vector3d, ll_sd_from_quaternion
+#include "llselectmgr.h"
 #include "llviewercamera.h"
 #include "llviewercontrol.h"    // gSavedSettings, LLCachedControl
+#include "llviewerobject.h"
 #include "llviewerregion.h"
+#include "llvoavatar.h"
+#include "llvoavatarself.h"     // gAgentAvatarp, isAgentAvatarValid()
 #include "m3math.h"
 
 namespace
 {
-constexpr S32 TAKE_FORMAT_VERSION = 1;
+constexpr S32 TAKE_FORMAT_VERSION = 2;  // 2: added anchor_pos/anchor_yaw
 
 // ---------------------------------------------------------------------------
 // Raw quaternion math for squad interpolation. LLQuaternion's component
@@ -130,6 +134,14 @@ FRQuat fr_squad(const FRQuat& q1, const FRQuat& a, const FRQuat& b, const FRQuat
     return fr_slerp(fr_slerp(q1, q2, t), fr_slerp(a, b, t), 2.f * t * (1.f - t));
 }
 
+// heading (yaw about world Z) of an orientation's at-axis
+F32 fr_yawOf(const LLQuaternion& q)
+{
+    LLMatrix3 m(q);
+    const LLVector3 at(m.mMatrix[0]);
+    return atan2f(at.mV[VY], at.mV[VX]);
+}
+
 // uniform Catmull-Rom (fine for near-uniform recorded samples; sparse
 // hand-edited keys get gentle overshoot rather than corners)
 inline F64 fr_catmullRom(F64 p0, F64 p1, F64 p2, F64 p3, F64 u)
@@ -181,8 +193,10 @@ void LLFlycamRecorder::startRecording()
     mPlayhead = 0.f;
     mPlayDir = 1.f;
     mHavePrev = false;
+    mHaveLiveAnchor = false;
     mRecordTimer.reset();
     sampleCamera(0.f);
+    latchRecordAnchor();
     mStatus = "Recording...";
 }
 
@@ -215,6 +229,7 @@ void LLFlycamRecorder::startPlayback()
     }
     mPlayDir = 1.f;
     mHavePrev = false;
+    mHaveLiveAnchor = false;    // re-latch the anchor fresh for this run
     LLCameraOperator::instance().reset();
     mState = STATE_PLAYING;
     mStatus = "Playing";
@@ -261,6 +276,8 @@ void LLFlycamRecorder::clear()
     mKeys.clear();
     mPlayhead = 0.f;
     mPlayDir = 1.f;
+    mHaveRecAnchor = false;
+    mHaveLiveAnchor = false;
     mStatus = "Cleared";
 }
 
@@ -338,6 +355,150 @@ void LLFlycamRecorder::canonicalizeRotations()
             cur = -cur;
         }
     }
+}
+
+// ---------------------------------------------------------------------------
+// anchoring (relative playback)
+// ---------------------------------------------------------------------------
+void LLFlycamRecorder::latchRecordAnchor()
+{
+    if (isAgentAvatarValid())
+    {
+        mRecAnchorPos = gAgentAvatarp->getPositionGlobal();
+        mRecAnchorYaw = fr_yawOf(gAgentAvatarp->getRenderRotation());
+        mHaveRecAnchor = true;
+    }
+    else if (!mKeys.empty())
+    {
+        mRecAnchorPos = mKeys[0].mPosGlobal;
+        mRecAnchorYaw = fr_yawOf(mKeys[0].mRot);
+        mHaveRecAnchor = true;
+    }
+}
+
+bool LLFlycamRecorder::resolveLiveAnchor(LLVector3d& pos, F32& yaw)
+{
+    static LLCachedControl<S32>  anchor_mode(gSavedSettings, "FlycamRecAnchorMode", 0);
+    static LLCachedControl<bool> follow(gSavedSettings, "FlycamRecFollowAnchor", false);
+
+    const S32 mode = anchor_mode;
+    if (mode <= ANCHOR_WORLD || mode > ANCHOR_CAMERA)
+    {
+        return false;
+    }
+    // a mode switch invalidates the previous latch
+    if (mHaveLiveAnchor && mLiveAnchorMode != mode)
+    {
+        mHaveLiveAnchor = false;
+    }
+
+    const bool want_fresh = !mHaveLiveAnchor
+                            || (follow && mode != ANCHOR_CAMERA);
+    if (want_fresh)
+    {
+        bool resolved = false;
+        LLVector3d a_pos;
+        F32 a_yaw = 0.f;
+
+        if (mode == ANCHOR_CAMERA)
+        {
+            // the camera pose at the moment playback starts
+            LLViewerCamera* cam = LLViewerCamera::getInstance();
+            a_pos = gAgent.getPosGlobalFromAgent(cam->getOrigin());
+            a_yaw = fr_yawOf(cam->getQuaternion());
+            resolved = true;
+        }
+        else
+        {
+            LLVOAvatar* av = nullptr;
+            LLViewerObject* root = nullptr;
+            if (mode == ANCHOR_SELECTION)
+            {
+                if (LLViewerObject* obj = LLSelectMgr::getInstance()->getSelection()->getPrimaryObject())
+                {
+                    av = obj->getAvatar();      // avatar itself or attachment wearer
+                    if (!av)
+                    {
+                        root = obj->getRootEdit();
+                    }
+                }
+            }
+            if (!av && !root && isAgentAvatarValid())
+            {
+                // ANCHOR_SELF, or nothing valid selected: my avatar
+                av = (LLVOAvatar*)gAgentAvatarp;
+            }
+            if (av && !av->isDead())
+            {
+                a_pos = av->getPositionGlobal();
+                a_yaw = fr_yawOf(av->getRenderRotation());
+                resolved = true;
+            }
+            else if (root && !root->isDead())
+            {
+                a_pos = root->getPositionGlobal();
+                a_yaw = fr_yawOf(root->getRenderRotation());
+                resolved = true;
+            }
+        }
+
+        if (resolved)
+        {
+            mLiveAnchorPos = a_pos;
+            mLiveAnchorYaw = a_yaw;
+            mLiveAnchorMode = mode;
+            mHaveLiveAnchor = true;
+        }
+        // resolution failure keeps the previous latch (e.g. the anchor
+        // avatar left mid-shot) so the camera doesn't snap
+    }
+
+    if (!mHaveLiveAnchor)
+    {
+        return false;
+    }
+    pos = mLiveAnchorPos;
+    yaw = mLiveAnchorYaw;
+    return true;
+}
+
+void LLFlycamRecorder::applyAnchor(LLVector3d& pos, LLQuaternion& rot)
+{
+    static LLCachedControl<S32> anchor_mode(gSavedSettings, "FlycamRecAnchorMode", 0);
+
+    LLVector3d live_pos;
+    F32 live_yaw;
+    if (!resolveLiveAnchor(live_pos, live_yaw) || mKeys.empty())
+    {
+        return;
+    }
+
+    // reference frame the recorded pose is expressed against: the recorded
+    // avatar anchor for subject modes, the first keyframe for camera mode
+    LLVector3d ref_pos;
+    F32 ref_yaw;
+    if ((S32)anchor_mode == ANCHOR_CAMERA || !mHaveRecAnchor)
+    {
+        ref_pos = mKeys[0].mPosGlobal;
+        ref_yaw = fr_yawOf(mKeys[0].mRot);
+    }
+    else
+    {
+        ref_pos = mRecAnchorPos;
+        ref_yaw = mRecAnchorYaw;
+    }
+
+    // yaw-only rotation keeps the recorded roll/pitch (level horizon)
+    const F32 dyaw = live_yaw - ref_yaw;
+    const LLQuaternion rz(dyaw, LLVector3(0.f, 0.f, 1.f));
+
+    // offsets are short enough for F32 once the anchor is subtracted
+    LLVector3 offset((F32)(pos.mdV[VX] - ref_pos.mdV[VX]),
+                     (F32)(pos.mdV[VY] - ref_pos.mdV[VY]),
+                     (F32)(pos.mdV[VZ] - ref_pos.mdV[VZ]));
+    offset = offset * rz;
+    pos = live_pos + LLVector3d(offset);
+    rot = rot * rz;
 }
 
 // ---------------------------------------------------------------------------
@@ -437,6 +598,7 @@ void LLFlycamRecorder::updateCamera()
     LLQuaternion rot;
     F32 fov;
     evalPose(mPlayhead, pos_global, rot, fov);
+    applyAnchor(pos_global, rot);
 
     LLVector3 out_pos = gAgent.getPosAgentFromGlobal(pos_global);
     LLQuaternion out_rot = rot;
@@ -504,6 +666,12 @@ bool LLFlycamRecorder::saveToFile(const std::string& filename)
     if (LLViewerRegion* region = gAgent.getRegion())
     {
         doc["region"] = region->getName();
+    }
+    if (mHaveRecAnchor)
+    {
+        // recording avatar's pose: the subject frame for relative playback
+        doc["anchor_pos"] = ll_sd_from_vector3d(mRecAnchorPos);
+        doc["anchor_yaw"] = (LLSD::Real)mRecAnchorYaw;
     }
     LLSD keys = LLSD::emptyArray();
     for (const Keyframe& key : mKeys)
@@ -584,7 +752,22 @@ bool LLFlycamRecorder::loadFromFile(const std::string& filename)
     mKeys.swap(unique_keys);
     mPlayhead = 0.f;
     mPlayDir = 1.f;
+    mHaveLiveAnchor = false;
     canonicalizeRotations();
+
+    // anchor frame: from the file, or derived from the first keyframe for
+    // hand-made / older takes
+    if (doc.has("anchor_pos"))
+    {
+        mRecAnchorPos = ll_vector3d_from_sd(doc["anchor_pos"]);
+        mRecAnchorYaw = (F32)doc["anchor_yaw"].asReal();
+    }
+    else
+    {
+        mRecAnchorPos = mKeys[0].mPosGlobal;
+        mRecAnchorYaw = fr_yawOf(mKeys[0].mRot);
+    }
+    mHaveRecAnchor = true;
     mStatus = llformat("Loaded %d keys (%.1f s)", getNumKeyframes(), getDuration());
     LL_INFOS() << "Flycam take loaded from " << filename << LL_ENDL;
     return true;

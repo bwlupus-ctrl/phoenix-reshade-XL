@@ -6209,6 +6209,28 @@
       <key>Value</key>
       <integer>1</integer>
     </map>
+    <key>FlycamRecAnchorMode</key>
+    <map>
+      <key>Comment</key>
+      <string>Flycam recorder playback anchor: 0=world (as recorded) 1=my avatar 2=selected object/avatar 3=camera at play start</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>S32</string>
+      <key>Value</key>
+      <integer>0</integer>
+    </map>
+    <key>FlycamRecFollowAnchor</key>
+    <map>
+      <key>Comment</key>
+      <string>Flycam recorder: re-anchor every frame so the path follows a moving avatar/object</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>Boolean</string>
+      <key>Value</key>
+      <integer>0</integer>
+    </map>
     <key>FlycamRecUseOperator</key>
     <map>
       <key>Comment</key>
